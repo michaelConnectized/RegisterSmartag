@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.infosmart.registerSmartag">
 
+    <uses-permission android:name="android.permission.NFC" />
+    <uses-feature android:name="android.hardware.nfc" android:required="true" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,20 +11,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ConfirmActivity">
+        <activity android:name=".activity.ConfirmActivity">
         </activity>
-        <activity android:name=".CardPressingActivity">
+        <activity android:name=".activity.CardPressingActivity">
         </activity>
-        <activity android:name=".FinishMatchingActivity">
+        <activity android:name=".activity.FinishMatchingActivity">
         </activity>
-        <activity android:name=".HelmetPressingActivity">
+        <activity android:name=".activity.HelmetPressingActivity">
         </activity>
     </application>
 

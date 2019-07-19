@@ -1,14 +1,18 @@
-package com.infosmart.registerSmartag;
+package com.infosmart.registerSmartag.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class ConfirmActivity extends AppCompatActivity {
+import com.infosmart.registerSmartag.R;
+import com.infosmart.registerSmartag.object.PairInfo;
+
+public class FinishMatchingActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,11 +21,13 @@ public class ConfirmActivity extends AppCompatActivity {
         getSupportActionBar().hide(); // hide the title bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
-        setContentView(R.layout.activity_confirm);
+        setContentView(R.layout.activity_finish_matching);
+
+        Log.e("FinishMatchingActivity", PairInfo.getJson());
     }
 
     public void clickNext(View view) {
-        Intent intent = new Intent(this, CardPressingActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
     }

@@ -1,4 +1,6 @@
-package com.infosmart.registerSmartag;
+package com.infosmart.registerSmartag.activity;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,9 +8,9 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-import androidx.appcompat.app.AppCompatActivity;
+import com.infosmart.registerSmartag.R;
 
-public class FinishMatchingActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,11 +19,11 @@ public class FinishMatchingActivity extends AppCompatActivity {
         getSupportActionBar().hide(); // hide the title bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
-        setContentView(R.layout.activity_finish_matching);
+        setContentView(R.layout.activity_main);
     }
 
     public void clickNext(View view) {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, ConfirmActivity.class);
         startActivity(intent);
         finish();
     }
