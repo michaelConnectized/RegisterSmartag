@@ -19,7 +19,7 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Science Park S1"
+            android:text="@string/project_title"
             android:textColor="#ffffff" />
         <TextView
             android:id="@+id/spacing2"
@@ -50,6 +50,7 @@
             android:gravity="center"
             android:src="@drawable/email"/>
         <EditText
+            android:id="@+id/et_englishName"
             android:padding="5dp"
             android:layout_width="300dp"
             android:layout_height="40dp"
@@ -57,6 +58,8 @@
             android:scaleType="fitXY"
             android:gravity="left"
             android:background="@drawable/rec"
+            android:textColor="#ffffff"
+            android:enabled="false"
             android:src="@drawable/email"/>
 
 
@@ -77,6 +80,7 @@
             android:gravity="center"
             android:src="@drawable/pwd"/>
         <EditText
+            android:id="@+id/et_workerId"
             android:padding="5dp"
             android:layout_width="300dp"
             android:layout_height="40dp"
@@ -84,8 +88,9 @@
             android:scaleType="fitXY"
             android:background="@drawable/rec"
             android:src="@drawable/email"
+            android:maxLines="1"
             android:textColor="#ffffff"
-            android:text="CWR-"/>
+            android:text="CWR"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"

@@ -20,7 +20,7 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Science Park S1"
+            android:text="@string/project_title"
             android:textColor="#ffffff" />
         <TextView
             android:id="@+id/spacing2"
