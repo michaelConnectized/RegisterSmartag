@@ -88,7 +88,7 @@
             android:scaleType="fitXY"
             android:background="@drawable/rec"
             android:src="@drawable/email"
-            android:maxLines="1"
+            android:singleLine="true"
             android:textColor="#ffffff"
             android:text="CWR"/>
     </LinearLayout>

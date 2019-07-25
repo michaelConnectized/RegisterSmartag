@@ -1,4 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Attend Registration</string>
     <string name="project_title">23G Linker Demo</string>
+    <string name="project_id">test zoner</string>
 </resources>

@@ -52,6 +52,7 @@ public class ConfirmActivity extends AppCompatActivity {
     }
 
     public void clickNext(View view) {
+        PairInfo.setWorkerId(id);
         Intent intent = new Intent(this, CardPressingActivity.class);
         startActivity(intent);
         finish();

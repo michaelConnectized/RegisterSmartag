@@ -37,9 +37,12 @@ public class CardPressingActivity extends AppCompatActivity implements NFCCardEv
     public void onCardTapped(CardTappedEventArgs e){
         if (e.getTag()[1].equals("android.nfc.tech.MifareClassic") || e.getTag()[1].equals("android.nfc.tech.NfcA")) {
             PairInfo.setCardId(e.getCardID().getReversedInteger());
+            PairInfo.setHexCardId(e.getCardID().getRawHexadecimal());
             next();
         } else {
-            Log.e("FinishMatchingActivity", e.getTag()[1]);
+            for (int i=0; i<e.getTag().length; i++) {
+                Log.e("FinishMatchingActivity", e.getTag()[i]);
+            }
         }
     }
 

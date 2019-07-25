@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private String tag = "MainActivity";
 
     private RegisterApiConnectionAdaptor registerApiConnectionAdaptor;
-    private String projectId = "test zoner";
+    private String projectId = "";
     private List<Worker> workerList;
 
     private EditText et_englishName;
@@ -51,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
         et_workerId = findViewById(R.id.et_workerId);
         et_englishName = findViewById(R.id.et_englishName);
         registerApiConnectionAdaptor = new RegisterApiConnectionAdaptor(getResources());
+
+        projectId = getResources().getString(R.string.project_id);
     }
 
     public void initListener() {
@@ -104,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("englishName", selectWorker.getEnglishName());
         intent.putExtra("chineseName", selectWorker.getChineseName());
         startActivity(intent);
-        finish();
+//        finish();
     }
 
     public void requestPermission() {
