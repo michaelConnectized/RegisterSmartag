@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.infosmart.registerSmartag.R;
+import com.infosmart.registerSmartag.model.RegisterApiConnectionAdaptor;
 import com.infosmart.registerSmartag.nfcCore.CardTappedEventArgs;
 import com.infosmart.registerSmartag.nfcCore.NFCCardEventHandler;
 import com.infosmart.registerSmartag.nfcCore.NFCCardEventListener;
@@ -36,9 +37,9 @@ public class CardPressingActivity extends AppCompatActivity implements NFCCardEv
     @Override
     public void onCardTapped(CardTappedEventArgs e){
         if (e.getTag()[1].equals("android.nfc.tech.MifareClassic") || e.getTag()[1].equals("android.nfc.tech.NfcA")) {
-            PairInfo.setCardId(e.getCardID().getReversedInteger());
-            PairInfo.setHexCardId(e.getCardID().getRawHexadecimal());
-            next();
+            PairInfo.setCardId(e.getCardID().getRawInteger());
+            PairInfo.setHexCardId(e.getCardID().getReversedHexadecimal());
+            checkAndUpdateCardId();
         } else {
             for (int i=0; i<e.getTag().length; i++) {
                 Log.e("FinishMatchingActivity", e.getTag()[i]);
@@ -67,5 +68,15 @@ public class CardPressingActivity extends AppCompatActivity implements NFCCardEv
         Intent intent = new Intent(this, HelmetPressingActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    public void checkAndUpdateCardId() {
+        if (PairInfo.getCardId()!=null && PairInfo.getWorkerId()!=null) {
+            if (new RegisterApiConnectionAdaptor(this).setWorkerCardId(PairInfo.getWorkerId(), PairInfo.getCardId(), PairInfo.getWorker())) {
+                next();
+            } else {
+                Toast.makeText(this, "Card Update Fail!", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 }

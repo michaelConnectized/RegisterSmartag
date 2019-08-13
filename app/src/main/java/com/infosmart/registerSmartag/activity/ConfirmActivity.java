@@ -17,10 +17,12 @@ public class ConfirmActivity extends AppCompatActivity {
     private String id;
     private String englishName;
     private String chineseName;
+    private String trade;
 
     private TextView tv_eng;
     private TextView tv_chi;
     private TextView tv_cwr;
+    private TextView tv_trade;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,23 +40,30 @@ public class ConfirmActivity extends AppCompatActivity {
         tv_eng = findViewById(R.id.tv_eng);
         tv_chi = findViewById(R.id.tv_chi);
         tv_cwr = findViewById(R.id.tv_cwr);
+        tv_trade = findViewById(R.id.tv_trade);
 
-        Intent intent = getIntent();
-        id = intent.getStringExtra("workerId");
-        englishName = intent.getStringExtra("englishName");
-        chineseName = intent.getStringExtra("chineseName");
+        id = PairInfo.getWorker().getWorkerIdNo();
+        englishName = PairInfo.getWorker().getEnglishName();
+        chineseName = PairInfo.getWorker().getChineseName();
+        trade = "";
+
     }
 
     public void initUI() {
         tv_eng.setText(englishName);
         tv_chi.setText(chineseName);
-        tv_cwr.setText(id.replace("CWR", "CWR- "));
+        tv_cwr.setText(id);
+        tv_trade.setText(trade);
     }
 
     public void clickNext(View view) {
-        PairInfo.setWorkerId(id);
+        PairInfo.setWorkerId(PairInfo.getWorker().getId());
         Intent intent = new Intent(this, CardPressingActivity.class);
         startActivity(intent);
+        finish();
+    }
+
+    public void clickBack(View view) {
         finish();
     }
 }

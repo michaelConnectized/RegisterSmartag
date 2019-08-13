@@ -9,14 +9,15 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 
 public class HttpApiConnection extends ApiConnection {
     private final String tag = "HttpApiConnection";
 
-    public HttpApiConnection(String fullUrl, String postData) {
-        super(fullUrl, postData);
+    public HttpApiConnection(String fullUrl, String postData, String method, Map<String, String> headers) {
+        super(fullUrl, postData, method, headers);
     }
 
     public String connect(String postData) {
@@ -25,9 +26,16 @@ public class HttpApiConnection extends ApiConnection {
             URL url = new URL( fullUrl );
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             try {
-                urlConnection.setRequestProperty("Content-Type", "application/json");
+                urlConnection.setRequestMethod(method);
+                if (headers.isEmpty()) {
+                    urlConnection.setRequestProperty("Content-Type", "application/json");
+                } else {
+                    for (Map.Entry<String, String> entry : headers.entrySet()) {
+                        urlConnection.setRequestProperty(entry.getKey(), entry.getValue());
+                    }
+                }
+
                 if (!postData.equals("")) {
-                    urlConnection.setRequestMethod("POST");
                     urlConnection.setFixedLengthStreamingMode(postData.getBytes().length);
                     OutputStream os = urlConnection.getOutputStream();
                     BufferedWriter writer = new BufferedWriter( new OutputStreamWriter(os, "UTF-8"));
@@ -45,6 +53,12 @@ public class HttpApiConnection extends ApiConnection {
                     }
                 } else {
                     Log.e(tag, "ResponseCode: "+responseCode);
+                    String line;
+                    BufferedReader br=new BufferedReader(new InputStreamReader(urlConnection.getErrorStream()));
+                    while ((line=br.readLine()) != null) {
+                        response.append(line);
+                    }
+                    Log.e(tag, "Response: "+response);
                 }
             } finally {
                 urlConnection.disconnect();

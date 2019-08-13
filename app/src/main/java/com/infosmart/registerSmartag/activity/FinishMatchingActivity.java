@@ -28,24 +28,14 @@ public class FinishMatchingActivity extends AppCompatActivity {
 
         Log.e("FinishMatchingActivity", PairInfo.getJson());
         initVar();
-        checkAndUpdateCardId();
         checkAndRegisterHelmet();
     }
 
     public void initVar() {
-        registerApiConnectionAdaptor = new RegisterApiConnectionAdaptor(getResources());
+        registerApiConnectionAdaptor = new RegisterApiConnectionAdaptor(this);
     }
 
-    public void checkAndUpdateCardId() {
-        if (PairInfo.getCardId()!=null && PairInfo.getWorkerId()!=null) {
-            if (registerApiConnectionAdaptor.setWorkerCardId(PairInfo.getWorkerId(), PairInfo.getCardId())) {
-//                Toast.makeText(this, "Card Update Successful!", Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(this, "Card Update Fail!", Toast.LENGTH_LONG).show();
-                redirectTapCardActivity();
-            }
-        }
-    }
+
 
     public void checkAndRegisterHelmet() {
         if (PairInfo.getHelmetId()!=null && PairInfo.getHexCardId()!=null) {

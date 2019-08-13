@@ -3,10 +3,12 @@ package com.infosmart.registerSmartag.object;
 import org.json.JSONObject;
 
 public class PairInfo {
+
     private static String cardId;
     private static String helmetId;
     private static String workerId;
     private static String hexCardId;
+    private static Worker worker;
 
     public PairInfo() {
 
@@ -34,6 +36,14 @@ public class PairInfo {
 
     public static void setWorkerId(String workerId) {
         PairInfo.workerId = workerId;
+    }
+
+    public static Worker getWorker() {
+        return worker;
+    }
+
+    public static void setWorker(Worker worker) {
+        PairInfo.worker = worker;
     }
 
     public static String getHexCardId() {

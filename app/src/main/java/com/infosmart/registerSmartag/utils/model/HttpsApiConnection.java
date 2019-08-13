@@ -8,14 +8,15 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.URL;
+import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 
 public class HttpsApiConnection extends ApiConnection{
     private final String tag = "HttpApiConnection";
 
-    public HttpsApiConnection(String fullUrl, String postData) {
-        super(fullUrl, postData);
+    public HttpsApiConnection(String fullUrl, String postData, String method, Map<String, String> headers) {
+        super(fullUrl, postData, method, headers);
     }
 
     public String connect(String postData) {
@@ -26,7 +27,7 @@ public class HttpsApiConnection extends ApiConnection{
             try {
                 urlConnection.setRequestProperty("Content-Type", "application/json");
                 if (!postData.equals("")) {
-                    urlConnection.setRequestMethod("POST");
+                    urlConnection.setRequestMethod(method);
                     urlConnection.setFixedLengthStreamingMode(postData.getBytes().length);
                     OutputStream os = urlConnection.getOutputStream();
                     BufferedWriter writer = new BufferedWriter( new OutputStreamWriter(os, "UTF-8"));
