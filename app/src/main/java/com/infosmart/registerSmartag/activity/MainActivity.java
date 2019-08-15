@@ -77,6 +77,9 @@ public class MainActivity extends AppCompatActivity {
 //        MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.sound1);
 //        mp.start();
 //        Log.e(tag, workerList.toString());
+        Intent intent = new Intent(this, CardPressingActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     public void initVar() {
@@ -118,6 +121,8 @@ public class MainActivity extends AppCompatActivity {
     public void initWorkerListFromMongo() {
         if (workerList==null)
             workerList = registerApiConnectionAdaptor.getWorkerList(projectId);
+
+        PairInfo.setWorkers(workerList);
     }
 
     public void initProjectId() {

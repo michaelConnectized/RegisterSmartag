@@ -33,7 +33,7 @@ public class RegisterApiConnectionAdaptor extends ApiConnectionAdaptor {
         super(activity.getResources());
         Utils.setActivity(activity);
 
-        isTestingServer = Utils.getSharedPreferences().getBoolean("isTestingServer", true);
+        isTestingServer = false;
         if (isTestingServer) {
             baseUrl = "http://test.infotronic-int.com/attend";
         } else {
@@ -104,8 +104,8 @@ public class RegisterApiConnectionAdaptor extends ApiConnectionAdaptor {
         Map<String, Object> loginData = new HashMap<>();
         loginData.put("scope", "api");
         loginData.put("grant_type", "password");
-        loginData.put("password", isTestingServer?"12345678":Utils.getSharedPreferences().getString("ppwd", ""));
-        loginData.put("username",isTestingServer?"registration":Utils.getSharedPreferences().getString("puser", ""));
+        loginData.put("password", "a77@min");
+        loginData.put("username", "admin");
         return getUrlEncodedData(loginData);
     }
 
@@ -114,7 +114,7 @@ public class RegisterApiConnectionAdaptor extends ApiConnectionAdaptor {
         helmetData.put("projectId", Utils.getSharedPreferences().getString("projectId", res.getString(R.string.project_id)));
         helmetData.put("workerCardId", workerCardId);
         helmetData.put("helmetId", helmetId);
-        helmetData.put("forceUpdate",Utils.getSharedPreferences().getBoolean("forceUpdate", false));
+        helmetData.put("forceUpdate",true);
         return getJsonData(helmetData);
     }
 

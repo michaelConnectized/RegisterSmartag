@@ -19,6 +19,9 @@ import com.infosmart.registerSmartag.nfcCore.CardTappedEventArgs;
 import com.infosmart.registerSmartag.nfcCore.NFCCardEventHandler;
 import com.infosmart.registerSmartag.nfcCore.NFCCardEventListener;
 import com.infosmart.registerSmartag.object.PairInfo;
+import com.infosmart.registerSmartag.object.Worker;
+
+import java.util.List;
 
 public class CardPressingActivity extends AppCompatActivity implements NFCCardEventListener {
 
@@ -37,8 +40,8 @@ public class CardPressingActivity extends AppCompatActivity implements NFCCardEv
 
         NFCCardEventHandler handler = new NFCCardEventHandler(this, this);
         this.handler = handler;
-//        MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.sound3);
-//        mp.start();
+        MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.sound3);
+        mp.start();
     }
 
     @Override
@@ -46,13 +49,16 @@ public class CardPressingActivity extends AppCompatActivity implements NFCCardEv
         if (e.getTag()[1].equals("android.nfc.tech.MifareClassic") || e.getTag()[1].equals("android.nfc.tech.NfcA")) {
             PairInfo.setCardId(e.getCardID().getRawInteger());
             PairInfo.setHexCardId(e.getCardID().getReversedHexadecimal());
-            checkAndUpdateCardId();
+
+            if (isInList(PairInfo.getCardId())) {
+                next();
+            } else {
+                Toast.makeText(this, "此卡未登記, 請重拍\nPlease tap again", Toast.LENGTH_LONG).show();
+            }
+
+//            checkAndUpdateCardId();
         } else {
-            new AlertDialog.Builder(this)
-                    .setMessage("拍卡錯誤, 請重拍\nPlease tap again")
-                    .setNeutralButton(android.R.string.no, null)
-                    .setIcon(android.R.drawable.ic_dialog_alert)
-                    .show();
+            Toast.makeText(this, "拍卡錯誤, 請重拍\nPlease tap again", Toast.LENGTH_LONG).show();
             for (int i=0; i<e.getTag().length; i++) {
                 Log.e("FinishMatchingActivity", e.getTag()[i]);
             }
@@ -90,5 +96,16 @@ public class CardPressingActivity extends AppCompatActivity implements NFCCardEv
                 Toast.makeText(this, "Card Update Fail!", Toast.LENGTH_LONG).show();
             }
         }
+    }
+
+    public boolean isInList(String cardId) {
+        boolean isSet = false;
+        List<Worker> workers = PairInfo.getWorkers();
+        for (int i=0; i<workers.size(); i++) {
+            if (workers.get(i).getCardId().equals(cardId)) {
+                isSet = true;
+            }
+        }
+        return isSet;
     }
 }

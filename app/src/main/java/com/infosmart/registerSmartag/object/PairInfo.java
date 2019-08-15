@@ -2,8 +2,11 @@ package com.infosmart.registerSmartag.object;
 
 import org.json.JSONObject;
 
+import java.util.List;
+
 public class PairInfo {
 
+    private static List<Worker> workers;
     private static String cardId;
     private static String helmetId;
     private static String workerId;
@@ -58,6 +61,14 @@ public class PairInfo {
 
     public static String getTitle() {
         return title;
+    }
+
+    public static List<Worker> getWorkers() {
+        return workers;
+    }
+
+    public static void setWorkers(List<Worker> workers) {
+        PairInfo.workers = workers;
     }
 
     public static void setTitle(String title) {

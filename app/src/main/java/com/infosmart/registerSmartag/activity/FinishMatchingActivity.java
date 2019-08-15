@@ -3,6 +3,7 @@ package com.infosmart.registerSmartag.activity;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -33,8 +34,8 @@ public class FinishMatchingActivity extends AppCompatActivity {
         Log.e("FinishMatchingActivity", PairInfo.getJson());
         initVar();
         checkAndRegisterHelmet();
-//        MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.sound5);
-//        mp.start();
+        MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.sound5);
+        mp.start();
     }
 
     public void initVar() {
@@ -47,17 +48,21 @@ public class FinishMatchingActivity extends AppCompatActivity {
         if (PairInfo.getHelmetId()!=null && PairInfo.getHexCardId()!=null) {
             if (registerApiConnectionAdaptor.registerHelmet(PairInfo.getHexCardId(), PairInfo.getHelmetId())) {
 //                Toast.makeText(this, "Register Helmet Successful!", Toast.LENGTH_LONG).show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        redirectTapCardActivity();
+                    }
+                }, 4000);
             } else {
-                Toast.makeText(this, "Register Helmet Fail!", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "此卡可能已註冊頭盔", Toast.LENGTH_LONG).show();
                 redirectTapHelmetActivity();
             }
         }
     }
 
     public void clickNext(View view) {
-//        Intent intent = new Intent(this, MainActivity.class);
-//        startActivity(intent);
-        finish();
+//        redirectTapCardActivity();
     }
 
     public void redirectTapCardActivity() {
