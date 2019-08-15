@@ -1,6 +1,7 @@
 package com.infosmart.registerSmartag.activity;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -33,8 +34,12 @@ public class ConfirmActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
         setContentView(R.layout.activity_confirm);
 
+        ((TextView)findViewById(R.id.tv_title)).setText(PairInfo.getTitle());
+
         initVar();
         initUI();
+//        MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.sound2);
+//        mp.start();
     }
     public void initVar() {
         tv_eng = findViewById(R.id.tv_eng);

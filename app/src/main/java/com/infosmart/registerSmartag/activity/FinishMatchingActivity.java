@@ -1,11 +1,13 @@
 package com.infosmart.registerSmartag.activity;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,9 +28,13 @@ public class FinishMatchingActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
         setContentView(R.layout.activity_finish_matching);
 
+        ((TextView)findViewById(R.id.tv_title)).setText(PairInfo.getTitle());
+
         Log.e("FinishMatchingActivity", PairInfo.getJson());
         initVar();
         checkAndRegisterHelmet();
+//        MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.sound5);
+//        mp.start();
     }
 
     public void initVar() {

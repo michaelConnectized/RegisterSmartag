@@ -10,6 +10,8 @@ public class PairInfo {
     private static String hexCardId;
     private static Worker worker;
 
+    private static String title;
+
     public PairInfo() {
 
     }
@@ -52,6 +54,14 @@ public class PairInfo {
 
     public static void setHexCardId(String hexCardId) {
         PairInfo.hexCardId = hexCardId;
+    }
+
+    public static String getTitle() {
+        return title;
+    }
+
+    public static void setTitle(String title) {
+        PairInfo.title = title;
     }
 
     public static String getJson() {

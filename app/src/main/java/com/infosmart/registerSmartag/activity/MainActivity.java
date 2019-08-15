@@ -6,8 +6,10 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.PrecomputedText;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +17,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
 
     private int secretCount = 0;
 
+    MediaPlayer mp1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +62,20 @@ public class MainActivity extends AppCompatActivity {
         initProjects();
         initListener();
         initWorkerListFromMongo();
-
+//        mp1 = MediaPlayer.create(getApplicationContext(), R.raw.bgm);
+//
+//        mp1.start();
+//        mp1.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+//            @Override
+//            public void onCompletion(MediaPlayer mp) {
+//                if (mp1 == null) {return;}
+//                mp1.start();
+//                mp1.setLooping(true);
+//            }
+//        });
+//
+//        MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.sound1);
+//        mp.start();
 //        Log.e(tag, workerList.toString());
     }
 
@@ -111,7 +129,8 @@ public class MainActivity extends AppCompatActivity {
 
         for (int i=0; i<projectList.size(); i++) {
             if (projectList.get(i).getProjectId().equals(projectId)) {
-                ((TextView)findViewById(R.id.tv_title)).setText(projectList.get(i).getTitleEng());
+                PairInfo.setTitle(projectList.get(i).getTitleEng());
+                ((TextView)findViewById(R.id.tv_title)).setText(PairInfo.getTitle());
             }
         }
     }
@@ -227,12 +246,64 @@ public class MainActivity extends AppCompatActivity {
         builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Utils.getSharedPreferences().edit().putBoolean("isTestingServer", which==0?true:false).commit();
+                boolean isTestingServer = which==0;
+                if (isTestingServer) {
+                    Utils.getSharedPreferences().edit().putBoolean("isTestingServer", isTestingServer).commit();
+                    restart();
+                } else {
+                    saveLogin(isTestingServer);
+                }
             }
         });
 
         builderSingle.show();
         //isTestingServer
+    }
+
+    public void saveLogin(final boolean isTestingServer) {
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
+        builderSingle.setTitle("Login");
+
+
+        final EditText username = new EditText(this);
+        final EditText password = new EditText(this);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        LinearLayout.LayoutParams ll_lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        username.setLayoutParams(lp);
+        username.setHint("Username");
+        password.setLayoutParams(lp);
+        password.setHint("Password");
+
+        LinearLayout ll = new LinearLayout(this);
+        ll.setLayoutParams(ll_lp);
+        ll.setOrientation(LinearLayout.VERTICAL);
+        ll.addView(username);
+        ll.addView(password);
+        builderSingle.setView(ll);
+        builderSingle.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builderSingle.setPositiveButton("save", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Utils.getSharedPreferences().edit().putString("ppwd", password.getText().toString()).commit();
+                Utils.getSharedPreferences().edit().putString("puser", username.getText().toString()).commit();
+                Utils.getSharedPreferences().edit().putBoolean("isTestingServer", isTestingServer).commit();
+                dialog.dismiss();
+                restart();
+            }
+        });
+
+        builderSingle.show();
+
     }
 
     public void secretTitle(View view) {

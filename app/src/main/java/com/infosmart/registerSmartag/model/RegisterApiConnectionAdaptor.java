@@ -27,12 +27,14 @@ import java.util.Set;
 public class RegisterApiConnectionAdaptor extends ApiConnectionAdaptor {
     private final String tag = "RegisterApiConnectAdap";
     private String baseUrl = "";
+    private boolean isTestingServer;
 
     public RegisterApiConnectionAdaptor(Activity activity) {
         super(activity.getResources());
         Utils.setActivity(activity);
 
-        if (Utils.getSharedPreferences().getBoolean("isTestingServer", true)) {
+        isTestingServer = Utils.getSharedPreferences().getBoolean("isTestingServer", true);
+        if (isTestingServer) {
             baseUrl = "http://test.infotronic-int.com/attend";
         } else {
             baseUrl = "http://app.infotronic-int.com/attend";
@@ -102,8 +104,8 @@ public class RegisterApiConnectionAdaptor extends ApiConnectionAdaptor {
         Map<String, Object> loginData = new HashMap<>();
         loginData.put("scope", "api");
         loginData.put("grant_type", "password");
-        loginData.put("password", "12345678");
-        loginData.put("username","registration");
+        loginData.put("password", isTestingServer?"12345678":Utils.getSharedPreferences().getString("ppwd", ""));
+        loginData.put("username",isTestingServer?"registration":Utils.getSharedPreferences().getString("puser", ""));
         return getUrlEncodedData(loginData);
     }
 

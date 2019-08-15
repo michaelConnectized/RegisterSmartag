@@ -1,11 +1,14 @@
 package com.infosmart.registerSmartag.activity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,8 +33,12 @@ public class CardPressingActivity extends AppCompatActivity implements NFCCardEv
                 WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
         setContentView(R.layout.activity_card_pressing);
 
+        ((TextView)findViewById(R.id.tv_title)).setText(PairInfo.getTitle());
+
         NFCCardEventHandler handler = new NFCCardEventHandler(this, this);
         this.handler = handler;
+//        MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.sound3);
+//        mp.start();
     }
 
     @Override
@@ -41,6 +48,11 @@ public class CardPressingActivity extends AppCompatActivity implements NFCCardEv
             PairInfo.setHexCardId(e.getCardID().getReversedHexadecimal());
             checkAndUpdateCardId();
         } else {
+            new AlertDialog.Builder(this)
+                    .setMessage("拍卡錯誤, 請重拍\nPlease tap again")
+                    .setNeutralButton(android.R.string.no, null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
             for (int i=0; i<e.getTag().length; i++) {
                 Log.e("FinishMatchingActivity", e.getTag()[i]);
             }
