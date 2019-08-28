@@ -77,9 +77,12 @@ public class MainActivity extends AppCompatActivity {
 //        MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.sound1);
 //        mp.start();
 //        Log.e(tag, workerList.toString());
-        Intent intent = new Intent(this, CardPressingActivity.class);
-        startActivity(intent);
-        finish();
+        if (!getIntent().getBooleanExtra("setting", false)) {
+            Intent intent = new Intent(this, CardPressingActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
     }
 
     public void initVar() {
@@ -148,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ConfirmActivity.class);
         PairInfo.setWorker(selectWorker);
         startActivity(intent);
-//        finish();
+        finish();
     }
 
     public void requestPermission() {

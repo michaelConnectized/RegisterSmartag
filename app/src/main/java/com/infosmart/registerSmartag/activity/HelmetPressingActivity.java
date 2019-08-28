@@ -49,7 +49,7 @@ public class HelmetPressingActivity extends AppCompatActivity implements NFCCard
                     redirectTapCardActivity();
                 }
             }
-        }, 4000);
+        }, 10000);
     }
 
     @Override

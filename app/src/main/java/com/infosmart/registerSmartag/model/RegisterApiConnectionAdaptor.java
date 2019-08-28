@@ -79,13 +79,13 @@ public class RegisterApiConnectionAdaptor extends ApiConnectionAdaptor {
         return isSuccess(resultJson);
     }
 
-    public boolean registerHelmet(String workerCardId, String helmetId) {
+    public String registerHelmet(String workerCardId, String helmetId) {
         String resultJson = tryExecuteAndGetFromServer(baseUrl+"/api/helmetRegistration", getHelmetJsonPostData(workerCardId, helmetId));
         if (isSuccess(resultJson)) {
-            return true;
+            return "true";
         } else {
             Log.e("registerHelmet", resultJson);
-            return false;
+            return getValue(resultJson, "reasonMessage");
         }
     }
 

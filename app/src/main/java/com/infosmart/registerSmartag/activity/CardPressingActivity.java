@@ -26,6 +26,7 @@ import java.util.List;
 public class CardPressingActivity extends AppCompatActivity implements NFCCardEventListener {
 
     private NFCCardEventHandler handler;
+    private int count = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,14 +48,16 @@ public class CardPressingActivity extends AppCompatActivity implements NFCCardEv
     @Override
     public void onCardTapped(CardTappedEventArgs e){
         if (e.getTag()[1].equals("android.nfc.tech.MifareClassic") || e.getTag()[1].equals("android.nfc.tech.NfcA")) {
-            PairInfo.setCardId(e.getCardID().getRawInteger());
-            PairInfo.setHexCardId(e.getCardID().getReversedHexadecimal());
+            PairInfo.setCardId(e.getCardID().getReversedInteger());
+            PairInfo.setHexCardId(e.getCardID().getRawHexadecimal());
 
-            if (isInList(PairInfo.getCardId())) {
-                next();
-            } else {
-                Toast.makeText(this, "此卡未登記, 請重拍\nPlease tap again", Toast.LENGTH_LONG).show();
-            }
+//            if (isInList(PairInfo.getCardId())) {
+//                next();
+//            } else {
+//                Toast.makeText(this, "此卡未登記, 請重拍\nPlease tap again", Toast.LENGTH_LONG).show();
+//            }
+            //TODO
+            next();
 
 //            checkAndUpdateCardId();
         } else {
@@ -107,5 +110,16 @@ public class CardPressingActivity extends AppCompatActivity implements NFCCardEv
             }
         }
         return isSet;
+    }
+
+    public void backToOri(View view) {
+        if (++count==10) {
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("setting", true);
+            startActivity(intent);
+            finish();
+            count = 0;
+        }
+
     }
 }

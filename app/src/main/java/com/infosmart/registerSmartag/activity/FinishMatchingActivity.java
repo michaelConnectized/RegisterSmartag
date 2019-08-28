@@ -46,7 +46,8 @@ public class FinishMatchingActivity extends AppCompatActivity {
 
     public void checkAndRegisterHelmet() {
         if (PairInfo.getHelmetId()!=null && PairInfo.getHexCardId()!=null) {
-            if (registerApiConnectionAdaptor.registerHelmet(PairInfo.getHexCardId(), PairInfo.getHelmetId())) {
+            String resultMsg = registerApiConnectionAdaptor.registerHelmet(PairInfo.getHexCardId(), PairInfo.getHelmetId());
+            if (resultMsg.equals("true")) {
 //                Toast.makeText(this, "Register Helmet Successful!", Toast.LENGTH_LONG).show();
                 new Handler().postDelayed(new Runnable() {
                     @Override
@@ -55,7 +56,9 @@ public class FinishMatchingActivity extends AppCompatActivity {
                     }
                 }, 4000);
             } else {
-                Toast.makeText(this, "此卡可能已註冊頭盔", Toast.LENGTH_LONG).show();
+                Log.e("ApiConnectionAdaptor", PairInfo.getHexCardId());
+                Log.e("ApiConnectionAdaptor", PairInfo.getCardId());
+                Toast.makeText(this, resultMsg, Toast.LENGTH_LONG).show();
                 redirectTapHelmetActivity();
             }
         }
